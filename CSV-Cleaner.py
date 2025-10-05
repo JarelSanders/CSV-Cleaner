@@ -71,13 +71,33 @@ newAge4 = df2.loc[(df2['age'] > 66), 'age'] = 43
 print(df2.loc[df2['id'].isin([15, 42, 45])])
 print('------------------------------------------------------------------------------------------------------------\n\n\n')
 
+print('-----------------------------------------Change salary data type--------------------------------------------------')
+
+df2['salary'] = pd.to_numeric(
+    df2['salary'].replace('[^0-9\.-]', '', regex=True))
+print(df2['salary'])
+
+print('------------------------------------------------------------------------------------------------------------\n\n\n')
+
+print('--------------------------------------Check for salaries lt 20k--------------------------------------------------')
+
+lessSalary = df2.loc[(df2['salary'] <= 20000)]
+print(lessSalary)
+print('------------------------------------------------------------------------------------------------------------\n\n\n')
+
+print('----------------------------------------Change 5.0 salaries------------------------------------------------------')
+newSalary = df2.loc[(df2['salary'] <= 20000), 'salary'] = 85359.98
+
+print(df2.loc[df2['id'].isin([11])])
+print('------------------------------------------------------------------------------------------------------------\n\n\n')
+
+print('----------------------------------------Remove duplicate id------------------------------------------------------')
+df2 = df2.drop_duplicates(keep='first')
+
+print(df2.loc[df2['id'].isin([11])])
+print('------------------------------------------------------------------------------------------------------------\n\n\n')
 
 # print('----------------------------Making sure department names are consistent----------------------------------------')
-# df2["department"] = df2["department"].str.replace(
-#     "Marketng", "Marketing", regex=False)
-# df2["department"] = df2["department"].str.replace(
-#     "marketing", "Marketing", regex=False)
-# .astype(float)
 
 df2['department'] = df2['department'].replace(to_replace=['Marketng', 'marketing', 'hr', 'sales', 'engineering'],
                                               value=['Marketing', 'Marketing', 'HR', 'Sales', 'Engineering'])
